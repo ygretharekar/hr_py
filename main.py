@@ -1,6 +1,6 @@
 """Main Function"""
-from implementation.medium.encryption import Encryption
+from implementation.medium.almost_sorted import AlmostSorted
 
 if __name__ == "__main__":
-    E = Encryption()
-    E.solution()
+    arr = [1, 5, 4, 3, 2, 6]
+    AlmostSorted.solution(arr)
