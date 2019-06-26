@@ -15,7 +15,7 @@ class TestMaximumPalindromes(TestCase):
 
         ans = []
 
-        with open("medium\\tests\\test_cases\\maximum_palindromes_tc22_input.txt") \
+        with open("strings\\medium\\tests\\test_cases\\maximum_palindromes_tc22_input.txt") \
                 as i_file:
             inp = i_file.readline()
             s = inp.strip()
@@ -27,7 +27,7 @@ class TestMaximumPalindromes(TestCase):
                 ans.append(mp.solution(l, r))
                 inp = i_file.readline()
 
-        with open("medium\\tests\\test_cases\\maximum_palindromes_tc22_output.txt") \
+        with open("strings\\medium\\tests\\test_cases\\maximum_palindromes_tc22_output.txt") \
                 as o_file:
             out = o_file.readlines()
 
