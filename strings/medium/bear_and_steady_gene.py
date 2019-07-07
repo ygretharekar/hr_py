@@ -12,14 +12,16 @@ class BearAndSteadyGene:
 
         min_length = gene_length - 1
 
+        j_out = 0
+
         for j,  letter in enumerate(gene[::-1]):
             if cnt[letter] == gene_length // 4:
                 break
 
             cnt[letter] = cnt[letter] + 1
+            j_out = j
 
-
-        j = gene_length - j - 1
+        j = gene_length - j_out - 1
 
         min_length = j
 
@@ -29,4 +31,4 @@ class BearAndSteadyGene:
             while j < gene_length and cnt[letter] > gene_length // 4:
                 pass
 
-        return gene
+        return min_length
