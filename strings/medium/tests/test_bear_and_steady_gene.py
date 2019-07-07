@@ -9,8 +9,8 @@ class TestSherlockAndAnagrams(TestCase):
     def test_solution(self):
         """docstring"""
         b_g = BG()
-        gene = "ACGT"
+        gene = "GAAATAAA"
 
         ans = b_g.solution(gene)
 
-        self.assertEqual(210, ans, "failed")
+        self.assertEqual(5, ans, "failed")
