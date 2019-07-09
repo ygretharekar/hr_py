@@ -3,5 +3,6 @@
 
 class TheFullCountingSort:
     """docstring"""
-    def solution(self, parameter_list):
+    def solution(self, arr):
         """docstring"""
+        return arr
