@@ -1,36 +1,69 @@
-if __name__ == '__main__':
-    T = int(input())
+#!/bin/python3
 
-    import sys
+import sys, math
 
-    def min_cost(cost, m, n):
-        if n < 0 or m < 0:
-            return sys.maxsize
+MOD = 10 ** 9 +7
 
-        elif m == 0 and n == 0:
-            return cost[m][n]
+fact = [1]
+cur = 1
+for i in range(1, 6 * 10 ** 4):
+    cur *= i
+    cur %= MOD
+    fact.append(cur)
 
+alpha = "abcdefghijklmnopqrstuvwxyz"
+
+dp = [0]
+dp2 = [[0] * 26]
+def bitm(c):
+    return 1 << (alpha.find(c))
+
+def initialize(s):
+    cur = 0
+    for c in s:
+        tmp = [i for i in dp2[-1]]
+        tmp[alpha.find(c)] += 1
+        cur ^= bitm(c)
+        dp.append(cur)
+        dp2.append(tmp)
+    #print(dp)
+
+def modInv(x, pow=MOD-2):
+    if pow <= 3:
+        return (x ** pow) % MOD
+    else:
+        tmp = modInv(x, pow // 2)
+        tmp *= tmp
+        tmp %= MOD
+        if pow % 2 == 0:
+            return tmp
         else:
-            return cost[m][n] + min(min_cost(cost, m-1, n-1), min_cost(cost, m-1, n), min_cost(cost, m, n-1))
+            return (tmp * x) % MOD
 
+mi = [modInv(fact[x]) for x in range(6 * 10 ** 4)]
+        
+def answerQuery(l, r):
+    tmp = dp[l - 1] ^ dp[r]
+    tmp2 = [(dp2[r][i] - dp2[l - 1][i]) // 2 for i in range(26)]
+    possLetters = 0
+    for c in range(26):
+        if tmp & (1 << c):
+            possLetters += 1
+    middle = max(possLetters, 1)
+    others = (r - l + 1 - possLetters) // 2
+    ans = (fact[others] * middle) % MOD
+    for i in tmp2:
+        if i > 0:
+            ans *= mi[i]
+            ans %= MOD
+    return ans
 
-    for _ in range(T):
-        houses, roads = map(int, input().split())
-
-        costs = [[1001 for ___ in range(houses)] for __ in range(houses)]
-
-        for i in range(roads):
-            x, y, c = map(int, input().split())
-            costs[x-1][y-1] = c
-            costs[y-1][x-1] = c
-
-        q = int(input())
-
-        for i in range(q):
-            h, k = map(int, input().split())
-            min_c = min_cost(costs, houses - 1, h - 1)
-            if 2*min_c < k:
-                print(k - 2*min_c)
-
-            else:
-                print(0)
+if __name__ == "__main__":
+    s = input().strip()
+    initialize(s)
+    q = int(input().strip())
+    for a0 in range(q):
+        l, r = input().strip().split(' ')
+        l, r = [int(l), int(r)]
+        result = answerQuery(l, r)
+        print(result % MOD)
